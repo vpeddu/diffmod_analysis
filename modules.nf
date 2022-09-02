@@ -6,12 +6,12 @@ cpus 8
 beforeScript 'chmod o+rw .'
 label (params.GPU == "ON" ? 'with_gpus': 'with_cpus')
 input: 
-    tuple val(base), val(condition), val(replicated), file(fast5_dir), val(flowcell),val(kit)
+    tuple val(base), val(condition), val(replicated), file(fast5_dir), val(flowcell), val(kit), file(summary)
 
 output: 
     tuple val(base), file("${base}.basecalled_output/")
     tuple val(base), file("${base}.pass.fastq.gz")
-    tuple val(base), file("${fast5_dir}")
+    tuple val(base), file("${fast5_dir}"), file ("${summary}")
 
 script:
 """
@@ -68,7 +68,7 @@ container  "ttubb/nanopolish:latest"
 cpus 8
 beforeScript 'chmod o+rw .'
 input: 
-    tuple val(base), file(fastq), file(fast5_dir), file(bam), file(bamindex)
+    tuple val(base), file(fastq), file(fast5_dir), file(summary), file(bam), file(bamindex)
     file transcriptome
 
 output: 
@@ -81,17 +81,16 @@ echo running ${base}
 
 ls -lah 
 
-#nanopolish index -d ${fast5_dir} ${fastq}
+nanopolish index -d ${fast5_dir} ${fastq}
 
-find ${fast5_dir} -name *sequencing_summary* -exec cp {} . \\;
 
-#nanopolish eventalign --reads ${fastq} \
-#--bam ${bam} \
-#--genome ${transcriptome} \
-#--signal-index \
-#--scale-events \
-#--summary  \
-#--threads 32 > ${base}.eventalign.txt
+nanopolish eventalign --reads ${fastq} \
+--bam ${bam} \
+--genome ${transcriptome} \
+--signal-index \
+--scale-events \
+--summary ${summary} \
+--threads 32 > ${base}.eventalign.txt
 
 
 """

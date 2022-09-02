@@ -3,3 +3,4 @@ test_input
 null/
 .nextflow*
 test_out
+work/

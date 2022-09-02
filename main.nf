@@ -13,7 +13,7 @@ params.generate_db = false
             // can't get parser to work with headers
             // workaround for now 
             .splitCsv(header: false, skip:1)
-            .map { row -> [row[0], row[1], row[2],file(row[3]), row[4], row[5]] }
+            .map { row -> [row[0], row[1], row[2],file(row[3]), row[4], row[5], file(row[6])] }
         //Generate_ch.view()
         Basecall( 
             Generate_ch
