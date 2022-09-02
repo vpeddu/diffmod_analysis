@@ -1,0 +1,2 @@
+sample,condition,replicate,fast5_path,flow_cell,kit
+test1,c1,r1,/media/vikas/thiccy1/data/brooks_nanopore/nf/diffmod_analysis/test_data/Rep1_Mut1,FLO-MIN106,SQK-RNA001
