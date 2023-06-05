@@ -1,6 +1,12 @@
-# diffmod_analysis
+# diffmod analysis
 
 test run command 
 ```
-nextflow run main.nf --dataprep --input_csv input_template.csv -with-docker ubuntu:18.04 --transcriptome /home/vikas/Documents/refs/gencode.v39.transcripts.fa.gz --GPU ON -resume --output test_out 
+nextflow run main.nf \
+ 	--dataprep \
+ 	--transcriptome gencode.v39.transcripts.fa \
+	--transcriptome_gtf gencode.v39.annotation.sorted.gtf \
+ 	--input_csv input_template.csv \
+ 	-with-singularity ubuntu:18.04 \
+ 	-resume
 ```
