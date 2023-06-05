@@ -4,3 +4,5 @@ null/
 .nextflow*
 test_out
 work/
+gencode.v39* 
+*.yaml

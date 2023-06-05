@@ -3,7 +3,10 @@ nextflow.enable.dsl=2
 
 include { Basecall } from './modules.nf'
 include { Align_transcriptome } from './modules.nf'
-include { Nanopolish } from './modules.nf'
+include { Nanopolish_index } from './modules.nf'
+include { Nanopolish_eventalign } from './modules.nf'
+include { Xpore_dataprep } from './modules.nf'
+include { make_yaml } from './modules.nf'
 params.generate_db = false
 
     workflow{
@@ -13,7 +16,7 @@ params.generate_db = false
             // can't get parser to work with headers
             // workaround for now 
             .splitCsv(header: false, skip:1)
-            .map { row -> [row[0], row[1], row[2],file(row[3]), row[4], row[5], file(row[6])] }
+            .map { row -> [row[0], row[1], row[2],row[3], row[4], row[5], file(row[6])] }
         //Generate_ch.view()
         Basecall( 
             Generate_ch
@@ -22,13 +25,22 @@ params.generate_db = false
             Basecall.out[1],
             file(params.transcriptome)
         )
-                    Basecall.out[1].join(Basecall.out[2]).join(Align_transcriptome.out).groupTuple().view()
-        Nanopolish(
+        //Basecall.out[1].join(Basecall.out[2]).join(Align_transcriptome.out).groupTuple().view()
+        Nanopolish_index(
             Basecall.out[1].join(Basecall.out[2]).join(Align_transcriptome.out).groupTuple(),
             file(params.transcriptome)
-
-
         )
-
+        Nanopolish_eventalign(
+            Nanopolish_index.out.join(Basecall.out[1]).join(Basecall.out[2]).join(Align_transcriptome.out).groupTuple(),
+            file(params.transcriptome)
+        )
+        Xpore_dataprep( 
+            Nanopolish_eventalign.out,
+            file(params.transcriptome),
+            file(params.transcriptome_gtf)
+        )
+        make_yaml( 
+            file(params.input_csv)
+        )
         }
     }
