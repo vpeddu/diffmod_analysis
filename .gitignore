@@ -6,4 +6,4 @@ test_out
 work/
 gencode.v39* 
 *.yaml
-local*
+local_input_template.csv
