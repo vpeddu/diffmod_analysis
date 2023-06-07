@@ -164,7 +164,7 @@ echo "starting dataprep on ${base}"
 }
 
 
-process make_yaml { 
+process Make_yaml { 
 //conda "${baseDir}/env/env.yml"
 publishDir "${params.output}/make_yaml/${base}", mode: 'symlink', overwrite: true
 container  "yuukiiwa/xpore:2.1"
@@ -195,7 +195,7 @@ def csv_to_yaml(csv_path, output_path, output_dir):
             sample_name = row[0]
             condition = row[1]
             replicate = row[2]
-            data_path = str(sample_name + '.dataprep')
+            data_path = str('./' + sample_name + '.dataprep')
             
             if condition not in data:
                 data[condition] = {}
@@ -209,9 +209,37 @@ def csv_to_yaml(csv_path, output_path, output_dir):
 
 # Example usage
 csv_file_path = "${input_csv}"
+output_directory = './xpore_output'
 yaml_output_path = 'xpore_config.yaml'
-output_directory = '.'
 csv_to_yaml(csv_file_path, yaml_output_path, output_directory)
 """
 }
 
+process Xpore { 
+//conda "${baseDir}/env/env.yml"
+publishDir "${params.output}/xpore/${base}", mode: 'symlink', overwrite: true
+container  "yuukiiwa/xpore:2.1"
+cpus 8
+beforeScript 'chmod o+rw .'
+input: 
+    file yaml
+    file datapreps
+
+output: 
+
+script:
+"""
+#!/bin/bash
+
+ls -lah 
+
+echo "starting Xpore run"
+
+/usr/local/bin/xpore diffmod \
+    --config ${yaml} \
+    --n_processes ${task.cpus}
+
+/usr/local/bin/xpore postprocessing \
+    --diffmod_dir xpore_output
+"""
+}

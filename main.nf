@@ -6,7 +6,8 @@ include { Align_transcriptome } from './modules.nf'
 include { Nanopolish_index } from './modules.nf'
 include { Nanopolish_eventalign } from './modules.nf'
 include { Xpore_dataprep } from './modules.nf'
-include { make_yaml } from './modules.nf'
+include { Make_yaml } from './modules.nf'
+include { Xpore } from './modules.nf'
 params.generate_db = false
 
     workflow{
@@ -39,8 +40,12 @@ params.generate_db = false
             file(params.transcriptome),
             file(params.transcriptome_gtf)
         )
-        make_yaml( 
+        Make_yaml( 
             file(params.input_csv)
+        )
+        Xpore(
+            Make_yaml.out,
+            Xpore_dataprep.out.collect()
         )
         }
     }
