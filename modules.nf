@@ -243,3 +243,46 @@ echo "starting Xpore run"
     --diffmod_dir xpore_output
 """
 }
+
+process M6anet_dataprep { 
+//conda "${baseDir}/env/env.yml"
+publishDir "${params.output}/m6anet_dataprep/${base}", mode: 'symlink', overwrite: true
+container  "yuukiiwa/m6anet:1.0"
+cpus 8
+beforeScript 'chmod o+rw .'
+input: 
+    tuple val(base), file(eventalign)
+
+
+output: 
+    tuple val(base), file("${base}.dataprep")
+script:
+"""
+
+m6anet-dataprep --eventalign ${eventalign} \\
+                --out_dir ${base}.dataprep \\
+                --n_processes 4
+
+"""
+}
+
+process M6anet { 
+//conda "${baseDir}/env/env.yml"
+publishDir "${params.output}/m6anet/${base}", mode: 'symlink', overwrite: true
+container  "yuukiiwa/m6anet:1.0"
+cpus 8
+beforeScript 'chmod o+rw .'
+input: 
+    tuple val(base),file(datapreps)
+
+output: 
+    file "${base}.m6anet.output"
+script:
+"""
+m6anet-run_inference \\
+    --input_dir ${datapreps} \\
+    --out_dir ${base}.m6anet.output  \\
+    --n_processes ${task.cpus} \\
+    --num_iterations 1000
+"""
+}

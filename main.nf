@@ -8,6 +8,9 @@ include { Nanopolish_eventalign } from './modules.nf'
 include { Xpore_dataprep } from './modules.nf'
 include { Make_yaml } from './modules.nf'
 include { Xpore } from './modules.nf'
+include { M6anet_dataprep } from './modules.nf'
+include { M6anet } from './modules.nf'
+
 params.generate_db = false
 
     workflow{
@@ -46,6 +49,12 @@ params.generate_db = false
         Xpore(
             Make_yaml.out,
             Xpore_dataprep.out.collect()
+        )
+        M6anet_dataprep( 
+            Nanopolish_eventalign.out,
+        )
+        M6anet( 
+            M6anet_dataprep.out
         )
         }
     }
