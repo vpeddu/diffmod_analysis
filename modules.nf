@@ -122,7 +122,7 @@ gunzip ${transcriptome_fasta}
 
 nanopolish eventalign --reads ${fastq} \
 --bam ${bam} \
---genome gencode.v39.transcripts.fa \
+--genome ${transcriptome_fasta} \
 --signal-index \
 --scale-events \
 --summary ${summary} \
