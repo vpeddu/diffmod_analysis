@@ -26,7 +26,7 @@ params.generate_db = false
         Basecall( 
             Generate_ch
         ) 
-        }}}
+        }}
         // Align_transcriptome(
         //     Basecall.out[1],
         //     file(params.transcriptome)
