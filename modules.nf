@@ -6,7 +6,7 @@ cpus 8
 beforeScript 'chmod o+rw .'
 label (params.GPU == "ON" ? 'with_gpus': 'with_cpus')
 if ( params.PHOENIX ){ 
-    clusterOptions '--nodelist=phoenix-01'
+    clusterOptions '--nodelist=phoenix-10'
 }
 input: 
     tuple val(base), val(condition), val(replicated), path(fast5_dir), val(flowcell), val(kit), file(summary)
