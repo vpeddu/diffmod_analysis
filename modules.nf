@@ -105,11 +105,9 @@ echo "finished index for ${base}"
 process Nanopolish_eventalign { 
 //conda "${baseDir}/env/env.yml"
 publishDir "${params.output}/nanopolish_eventalign/${base}", mode: 'symlink', overwrite: true
-//container  "quay.io/biocontainers/nanopolish:0.14.0--h773013f_3"
-container  "yuukiiwa/xpore:2.1"
-
+container  "quay.io/biocontainers/nanopolish:0.14.0--h773013f_3"
 cpus 16
-beforeScript "chmod o+rw .; ulimit -s 50000"
+beforeScript 'chmod o+rw .'
 input: 
     tuple val(base), file(nanopolish_fqindex),file(nanopolish_fai),file(nanopolish_gzi),file(nanopolish_readbb), file(fastq), file(fast5_dir), file(summary), file(bam), file(bamindex)
     file transcriptome_fasta
@@ -128,14 +126,14 @@ echo "starting eventalign for ${base} "
 
 # not sure why, but this isn't defined in the ephemeral container
 export HDF5_PLUGIN_PATH=/usr/local/hdf5/lib/plugin/
-export FILE_UPLOAD_MAX_MEMORY_SIZE=10240000
+export FILE_UPLOAD_MAX_MEMORY_SIZE=102400
 gunzip ${transcriptome_fasta}
 
-/usr/local/bin/nanopolish eventalign --reads ${fastq} \
+nanopolish eventalign --reads ${fastq} \
 --bam ${bam} \
 --genome gencode.v39.transcripts.fa \
---signal-index \
---scale-events \
+#--signal-index \
+#--scale-events \
 --summary ${summary} \
 --threads ${task.cpus} > ${base}.eventalign.txt
 
