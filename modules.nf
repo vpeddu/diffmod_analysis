@@ -7,7 +7,7 @@ beforeScript 'chmod o+rw .'
 label (params.GPU == "ON" ? 'with_gpus': 'with_cpus')
 if ( params.PHOENIX ){ 
     //PHOENIX BASECALLING ONLY WORKS WITH DOCKER NO CLUE WHY
-    clusterOptions '--nodelist=phoenix-10'
+    clusterOptions '--nodelist=phoenix-[00-05]'
 }
 input: 
     tuple val(base), val(condition), val(replicated), path(fast5_dir), val(flowcell), val(kit), file(summary)
