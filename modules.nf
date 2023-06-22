@@ -3,7 +3,6 @@ process Basecall {
 publishDir "${params.output}/basecall/${base}", mode: 'symlink', overwrite: true
 container  "genomicpariscentre/guppy-gpu:latest"
 cpus 8
-memory 
 beforeScript 'chmod o+rw .'
 label (params.GPU == "ON" ? 'with_gpus': 'with_cpus')
 if ( params.PHOENIX ){ 
