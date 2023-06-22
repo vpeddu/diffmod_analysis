@@ -22,6 +22,8 @@ script:
 
 ls -lah 
 
+/usr/bin/nvidia-smi
+
 /usr/bin/guppy_basecaller --input_path ${fast5_dir}/ \
     --save_path ${base}.basecalled_output \
     --device auto \
