@@ -107,7 +107,7 @@ process Nanopolish_eventalign {
 publishDir "${params.output}/nanopolish_eventalign/${base}", mode: 'symlink', overwrite: true
 container  "quay.io/biocontainers/nanopolish:0.14.0--h773013f_3"
 cpus 16
-beforeScript "chmod o+rw .; 'ulimit -Ss unlimited'"
+beforeScript "chmod o+rw .; 'ulimit -s unlimited'"
 input: 
     tuple val(base), file(nanopolish_fqindex),file(nanopolish_fai),file(nanopolish_gzi),file(nanopolish_readbb), file(fastq), file(fast5_dir), file(summary), file(bam), file(bamindex)
     file transcriptome_fasta
