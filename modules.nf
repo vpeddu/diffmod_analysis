@@ -23,7 +23,7 @@ script:
 ls -lah 
 
 
-export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=0
 
 /usr/bin/nvidia-smi
 
