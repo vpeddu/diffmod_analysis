@@ -22,7 +22,7 @@ script:
 
 ls -lah 
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 
 /usr/bin/nvidia-smi
 
