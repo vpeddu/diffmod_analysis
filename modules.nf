@@ -3,9 +3,11 @@ process Basecall {
 publishDir "${params.output}/basecall/${base}", mode: 'symlink', overwrite: true
 container  "genomicpariscentre/guppy-gpu:latest"
 cpus 8
+memory 
 beforeScript 'chmod o+rw .'
 label (params.GPU == "ON" ? 'with_gpus': 'with_cpus')
 if ( params.PHOENIX ){ 
+    //PHOENIX BASECALLING ONLY WORKS WITH DOCKER NO CLUE WHY
     clusterOptions '--nodelist=phoenix-10'
 }
 input: 
@@ -176,7 +178,7 @@ process Make_yaml {
 //conda "${baseDir}/env/env.yml"
 publishDir "${params.output}/make_yaml/${base}", mode: 'symlink', overwrite: true
 container  "yuukiiwa/xpore:2.1"
-cpus 8
+cpus 1
 beforeScript 'chmod o+rw .'
 input: 
     file input_csv
