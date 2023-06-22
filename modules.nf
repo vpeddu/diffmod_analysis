@@ -105,7 +105,9 @@ echo "finished index for ${base}"
 process Nanopolish_eventalign { 
 //conda "${baseDir}/env/env.yml"
 publishDir "${params.output}/nanopolish_eventalign/${base}", mode: 'symlink', overwrite: true
-container  "quay.io/biocontainers/nanopolish:0.14.0--h773013f_3"
+//container  "quay.io/biocontainers/nanopolish:0.14.0--h773013f_3"
+container  "yuukiiwa/xpore:2.1"
+
 cpus 16
 beforeScript "chmod o+rw .; ulimit -s 50000"
 input: 
@@ -129,7 +131,7 @@ export HDF5_PLUGIN_PATH=/usr/local/hdf5/lib/plugin/
 export FILE_UPLOAD_MAX_MEMORY_SIZE=10240000
 gunzip ${transcriptome_fasta}
 
-nanopolish eventalign --reads ${fastq} \
+/usr/local/bin/nanopolish eventalign --reads ${fastq} \
 --bam ${bam} \
 --genome gencode.v39.transcripts.fa \
 --signal-index \
