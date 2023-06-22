@@ -127,11 +127,11 @@ echo "starting eventalign for ${base} "
 # not sure why, but this isn't defined in the ephemeral container
 export HDF5_PLUGIN_PATH=/usr/local/hdf5/lib/plugin/
 
-#gunzip ${transcriptome_fasta}
+gunzip ${transcriptome_fasta}
 
 nanopolish eventalign --reads ${fastq} \
 --bam ${bam} \
---genome ${transcriptome_fasta} \
+--genome gencode.v39.transcripts.fa \
 --signal-index \
 --scale-events \
 --summary ${summary} \
