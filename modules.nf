@@ -22,9 +22,9 @@ script:
 
 ls -lah 
 
-lshw -C display
+/usr/bin/lshw -C display
 export CUDA_VISIBLE_DEVICES=0
-lshw -C display
+/usr/bin/lshw -C display
 /usr/bin/nvidia-smi
 
 /usr/bin/guppy_basecaller --input_path ${fast5_dir}/ \
