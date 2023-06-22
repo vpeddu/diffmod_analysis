@@ -132,9 +132,9 @@ gunzip ${transcriptome_fasta}
 nanopolish eventalign --reads ${fastq} \
 --bam ${bam} \
 --genome gencode.v39.transcripts.fa \
-#--signal-index \
-#--scale-events \
---summary ${summary} \
+--signal-index \
+--scale-events \
+#--summary ${summary} \
 --threads ${task.cpus} > ${base}.eventalign.txt
 
 """
