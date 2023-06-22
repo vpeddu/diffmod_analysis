@@ -125,8 +125,8 @@ ls -lah
 echo "starting eventalign for ${base} "
 
 # not sure why, but this isn't defined in the ephemeral container
-#export HDF5_PLUGIN_PATH=/usr/local/hdf5/lib/plugin/
-export FILE_UPLOAD_MAX_MEMORY_SIZE=102400
+export HDF5_PLUGIN_PATH=/usr/local/hdf5/lib/plugin/
+export FILE_UPLOAD_MAX_MEMORY_SIZE=10240000
 gunzip ${transcriptome_fasta}
 
 nanopolish eventalign --reads ${fastq} \
