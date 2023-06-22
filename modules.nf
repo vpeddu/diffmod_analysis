@@ -134,7 +134,7 @@ nanopolish eventalign --reads ${fastq} \
 --genome gencode.v39.transcripts.fa \
 --signal-index \
 --scale-events \
-#--summary ${summary} \
+--summary \
 --threads ${task.cpus} > ${base}.eventalign.txt
 
 """
