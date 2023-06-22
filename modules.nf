@@ -18,7 +18,6 @@ output:
 
 script:
 """
-#!/bin/bash
 
 ls -lah 
 
