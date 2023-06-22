@@ -22,11 +22,13 @@ script:
 
 ls -lah 
 
+export CUDA_VISIBLE_DEVICES=0
+
 /usr/bin/nvidia-smi
 
 /usr/bin/guppy_basecaller --input_path ${fast5_dir}/ \
     --save_path ${base}.basecalled_output \
-    --device auto \
+    --device 'cuda:0' \
     --flowcell ${flowcell} \
     --kit ${kit} \
     --compress_fastq \
