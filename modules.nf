@@ -23,9 +23,9 @@ script:
 
 ls -lah 
 
-/usr/bin/lshw -C display
+
 export CUDA_VISIBLE_DEVICES=0
-/usr/bin/lshw -C display
+
 /usr/bin/nvidia-smi
 
 /usr/bin/guppy_basecaller --input_path ${fast5_dir}/ \
@@ -127,7 +127,7 @@ echo "starting eventalign for ${base} "
 # not sure why, but this isn't defined in the ephemeral container
 export HDF5_PLUGIN_PATH=/usr/local/hdf5/lib/plugin/
 
-gunzip ${transcriptome_fasta}
+#gunzip ${transcriptome_fasta}
 
 nanopolish eventalign --reads ${fastq} \
 --bam ${bam} \
