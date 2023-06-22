@@ -24,7 +24,7 @@ ls -lah
 
 /usr/bin/guppy_basecaller --input_path ${fast5_dir}/ \
     --save_path ${base}.basecalled_output \
-    --device 'cuda:0' \
+    --device auto \
     --flowcell ${flowcell} \
     --kit ${kit} \
     --compress_fastq \
