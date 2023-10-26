@@ -234,7 +234,7 @@ input:
     file datapreps
 
 output: 
-
+    file('xpore_output')
 script:
 """
 #!/bin/bash
