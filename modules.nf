@@ -8,7 +8,7 @@ label (params.GPU == "ON" ? 'with_gpus': 'with_cpus')
 if ( params.PHOENIX ){ 
     //PHOENIX BASECALLING ONLY WORKS WITH DOCKER NO CLUE WHY
     //clusterOptions '--nodelist=phoenix-[01-05] '
-    clusterOptions '#SBATCH --gres=gpu:1'
+    clusterOptions '--gres=gpu:1'
 }
 input: 
     tuple val(base), val(condition), val(replicated), path(fast5_dir), val(flowcell), val(kit), file(summary)
