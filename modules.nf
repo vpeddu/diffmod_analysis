@@ -7,7 +7,8 @@ beforeScript 'chmod o+rw .'
 label (params.GPU == "ON" ? 'with_gpus': 'with_cpus')
 if ( params.PHOENIX ){ 
     //PHOENIX BASECALLING ONLY WORKS WITH DOCKER NO CLUE WHY
-    clusterOptions '--nodelist=phoenix-[01-05]'
+    //clusterOptions '--nodelist=phoenix-[01-05] '
+    clusterOptions '#SBATCH --gres=gpu:1'
 }
 input: 
     tuple val(base), val(condition), val(replicated), path(fast5_dir), val(flowcell), val(kit), file(summary)
@@ -225,7 +226,7 @@ csv_to_yaml(csv_file_path, yaml_output_path, output_directory)
 
 process Xpore { 
 //conda "${baseDir}/env/env.yml"
-publishDir "${params.output}/xpore/${base}", mode: 'symlink', overwrite: true
+publishDir "${params.output}/xpore/${base}", mode: 'copy', overwrite: true
 container  "yuukiiwa/xpore:2.1"
 cpus 8
 beforeScript 'chmod o+rw .'
@@ -276,7 +277,7 @@ m6anet-dataprep --eventalign ${eventalign} \\
 
 process M6anet { 
 //conda "${baseDir}/env/env.yml"
-publishDir "${params.output}/m6anet/${base}", mode: 'symlink', overwrite: true
+publishDir "${params.output}/m6anet/${base}", mode: 'copy', overwrite: true
 container  "yuukiiwa/m6anet:1.0"
 cpus 8
 beforeScript 'chmod o+rw .'
